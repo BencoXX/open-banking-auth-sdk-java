@@ -5,10 +5,12 @@ import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.security.KeyFactory;
 import java.security.PrivateKey;
@@ -115,9 +117,19 @@ public final class Utils {
     }
   }
 
-  public static String responseToString(HttpURLConnection connection) {
+  public static String responseToString(HttpURLConnection connection) throws IOException {
     try {
-      BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+      return streamToString(connection.getInputStream());
+    } catch (IOException e) {
+      JsonNode errorJson = Utils.stringToJson(streamToString(connection.getErrorStream()));
+      throw new RuntimeException("Error_description: " + errorJson.get("error_description").asText(), e);
+    } catch (Exception ex) {
+      throw new RuntimeException("Unexpected error while get response content.", ex);
+    }
+  }
+
+  public static String streamToString(InputStream inputStream) throws IOException {
+	BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
       String inputLine;
       StringBuffer content = new StringBuffer();
       while ((inputLine = reader.readLine()) != null) {
@@ -125,9 +137,6 @@ public final class Utils {
       }
       reader.close();
       return content.toString();
-    } catch (Exception e) {
-      throw new RuntimeException("Unexpected error while get response content.", e);
-    }
   }
 
   public static String fileToString(File file) {
