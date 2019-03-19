@@ -20,17 +20,17 @@
 <%@page import="com.fintechblocks.java.sdk.OpenBankingAuth"%>
 <%@page import="com.fintechblocks.java.sdk.Utils"%>
 <%
-  String clientId = "miklosapp@account-info-1.0";
+  String clientId = "benceapp@account-info-1.0";
   String apiUrl = "https://api.sandbox.mkb.hu/account-info-1.0/open-banking/v1.1";
   String scope = "accounts";
   String redirectUri = "http://localhost:8080/example/accountinfo_example.jsp";
-  String tokenEndpointUri = "https://oidc-1.0.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/token";
-  String authorizationEndpointURI = "https://oidc-1.0.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
+  String tokenEndpointUri = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/token";
+  String authorizationEndpointURI = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
 
   String webRootPath = application.getRealPath("/").replace('\\', '/');
   Boolean code = false;
 
-  File privateKeyFile = new File(webRootPath + "WEB-INF/classes/private_key.pem");
+  File privateKeyFile = new File(webRootPath + "WEB-INF/classes/private_2048_key.pem");
   File accountRequestFile = new File(webRootPath + "WEB-INF/classes/account-request.json");
   String accountRequest = Utils.fileToString(accountRequestFile);
 
