@@ -2,3 +2,5 @@
 *.pem
 
 \.project
+
+*.key

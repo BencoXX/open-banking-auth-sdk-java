@@ -20,22 +20,22 @@
 <%@page import="com.fintechblocks.java.sdk.OpenBankingAuth"%>
 <%@page import="com.fintechblocks.java.sdk.Utils"%>
 <%
-  String clientId = "myapp@account-info-1.0";
-  String apiUrl = "https://<sandbox_api_host_of_the_bank>/account-info-1.0/open-banking/v3.1/aisp";
+  String clientId = "benceapp@account-info-1.0";
+  String apiUrl = "https://api.sandbox.mkb.hu/account-info-1.0/open-banking/v3.1/aisp";
   String scope = "accounts";
   String redirectUri = "http://localhost:8080/example/accountinfo_example.jsp";
-  String tokenEndpointUri = "https://<sandbox_api_host_of_the_bank>/auth/realms/ftb-sandbox/protocol/openid-connect/token";
-  String authorizationEndpointURI = "https://<sandbox_api_host_of_the_bank>/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
+  String tokenEndpointUri = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/token";
+  String authorizationEndpointURI = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
 
   String webRootPath = application.getRealPath("/").replace('\\', '/');
   Boolean code = false;
 
-  File privateKeyFile = new File(webRootPath + "WEB-INF/classes/private_key.pem");
+  File privateKeyFile = new File(webRootPath + "WEB-INF/classes/jwtRS256_2048.key");
   File accountAccessConsentFile = new File(webRootPath + "WEB-INF/classes/account-access-consent.json");
   String accountAccessConsent = Utils.fileToString(accountAccessConsentFile);
 
   String privateKey = Utils.fileToString(privateKeyFile);
-  String keyID = "AfFNfYXZf3arkkxv_9zqRU4d1jp1b39Edw1bxfEK5-4";
+  String keyID = "";
 
   OpenBankingAuth accountInfoAuth = new OpenBankingAuth(clientId, privateKey, keyID, redirectUri, tokenEndpointUri,
       authorizationEndpointURI, scope);
