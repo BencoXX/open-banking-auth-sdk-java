@@ -29,6 +29,8 @@ import org.bouncycastle.asn1.DEROctetString;
 import org.bouncycastle.asn1.DERSequence;
 import org.bouncycastle.asn1.pkcs.PKCSObjectIdentifiers;
 
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -121,13 +123,31 @@ public final class Utils {
     try {
       return streamToString(connection.getInputStream());
     } catch (IOException e) {
-      JsonNode errorJson = Utils.stringToJson(streamToString(connection.getErrorStream()));
-      throw new RuntimeException("Error_description: " + errorJson.get("error_description").asText(), e);
+      String errorStream = streamToString(connection.getErrorStream());
+      if(isValidJson(errorStream)) {
+          JsonNode errorJson = Utils.stringToJson(errorStream);
+          if(errorJson.has("error_description")) {
+              throw new RuntimeException("Unexpected error description: " + errorJson.get("error_description").asText(), e);
+          }
+      }
+      throw new RuntimeException("Unexpected error stream: " + errorStream, e);
     } catch (Exception ex) {
       throw new RuntimeException("Unexpected error while get response content.", ex);
     }
   }
 
+  public static boolean isValidJson(String json) {
+      boolean valid = false;
+      try {
+          JsonParser parser = new ObjectMapper().getJsonFactory().createJsonParser(json);
+          valid = true;
+      } catch (JsonParseException jpe) {
+      } catch (IOException ioe) {
+      }
+
+      return valid;
+  }
+  
   public static String streamToString(InputStream inputStream) throws IOException {
 	BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, Charset.forName("UTF-8")));
       String inputLine;
