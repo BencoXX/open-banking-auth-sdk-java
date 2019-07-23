@@ -64,9 +64,10 @@ public class OpenBankingAuth {
     url.append("scope=").append(this.scope).append("&");
 
     Map<String, Object> clientAssertionClaims = new HashMap<String, Object>();
+    long now = System.currentTimeMillis();
     clientAssertionClaims.put("sub", this.clientId);
     clientAssertionClaims.put("aud", this.tokenEndpointURI);
-    clientAssertionClaims.put("exp", 1546297200);
+    clientAssertionClaims.put("exp", (now / 1000) + 60);
 
     Map<String, Object> payload = new HashMap<String, Object>();
     payload.put("client_id", this.clientId);
@@ -107,7 +108,7 @@ public class OpenBankingAuth {
     Map<String, Object> clientAssertionClaims = new HashMap<String, Object>();
     clientAssertionClaims.put("sub", this.clientId);
     clientAssertionClaims.put("aud", this.tokenEndpointURI);
-    clientAssertionClaims.put("exp", 1546297200);
+    clientAssertionClaims.put("exp", Integer.MAX_VALUE);
     params.put("client_assertion", Utils.createJWT(this.privateKey, clientAssertionClaims));
 
     Utils.setFormUrlParameters(connection, params);
@@ -119,7 +120,7 @@ public class OpenBankingAuth {
     jwtHeaders.put("alg", "RS256");
     jwtHeaders.put("kid", this.keyID);
     jwtHeaders.put("b64", false);
-    jwtHeaders.put("http://openbanking.org.uk/iat", new Date().getTime());
+    jwtHeaders.put("http://openbanking.org.uk/iat", new Date().getTime() - 1000);
     jwtHeaders.put("http://openbanking.org.uk/iss", issuer);
     String[] crit = { "b64", "http://openbanking.org.uk/iat", "http://openbanking.org.uk/iss" };
     jwtHeaders.put("crit", crit);
