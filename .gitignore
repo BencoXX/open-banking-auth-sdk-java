@@ -4,3 +4,7 @@
 \.project
 
 *.key
+
+example/src/main/resources/newkey/
+
+example/src/main/resources/oldkey/

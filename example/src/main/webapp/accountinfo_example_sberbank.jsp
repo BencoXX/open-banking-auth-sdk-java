@@ -20,12 +20,12 @@
 <%@page import="com.fintechblocks.java.sdk.OpenBankingAuth"%>
 <%@page import="com.fintechblocks.java.sdk.Utils"%>
 <%
-  String clientId = "beniapp@account-info-1.0";
-  String apiUrl = "https://api.sandbox.mkb.hu/account-info-1.0/open-banking/v3.1/aisp";
+  String clientId = "beniapp@account-info-1.1";
+  String apiUrl = "https://api.sandbox.sberbank.hu/account-info-1.1/open-banking/v3.1/aisp";
   String scope = "accounts";
-  String redirectUri = "http://localhost:8080/example/accountinfo_example.jsp";
-  String tokenEndpointUri = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/token";
-  String authorizationEndpointURI = "https://api.sandbox.mkb.hu/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
+  String redirectUri = "http://localhost:8080/example/accountinfo_example_sberbank.jsp";
+  String tokenEndpointUri = "https://api.sandbox.sberbank.hu/auth/realms/ftb-sandbox/protocol/openid-connect/token";
+  String authorizationEndpointURI = "https://api.sandbox.sberbank.hu/auth/realms/ftb-sandbox/protocol/openid-connect/auth";
 
   String webRootPath = application.getRealPath("/").replace('\\', '/');
   Boolean code = false;
