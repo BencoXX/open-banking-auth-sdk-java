@@ -31,7 +31,7 @@
   Boolean code = false;
 
   File privateKeyFile = new File(webRootPath + "WEB-INF/classes/jwtRS256_2048.key");
-  File accountAccessConsentFile = new File(webRootPath + "WEB-INF/classes/account-access-consent.json");
+  File accountAccessConsentFile = new File(webRootPath + "WEB-INF/classes/account-access-consent-sberbank.json");
   String accountAccessConsent = Utils.fileToString(accountAccessConsentFile);
 
   String privateKey = Utils.fileToString(privateKeyFile);
