@@ -83,7 +83,7 @@
 
             // Get transactions
             result = callAPI(newAccessToken, apiUrl,
-                "transactions?fromBookingDateTime=2019-06-01&toBookingDateTime=2019-08-01", "GET", null, null);
+                "transactions?fromBookingDateTime=2019-08-01T00:00:00.000Z&toBookingDateTime=2019-09-15T00:00:00.000Z", "GET", null, null);
             out.println(result.toString());
 
             // Get accountId + transactions
