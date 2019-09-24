@@ -78,12 +78,12 @@
             JsonNode result;
 
             // Get accounts
-            //         result = callAPI(newAccessToken, apiUrl, "accounts", "GET", null, null);
-            //         out.println(result.toString());
+            result = callAPI(newAccessToken, apiUrl, "accounts", "GET", null, null);
+            out.println(result.toString());
 
             // Get transactions
             result = callAPI(newAccessToken, apiUrl,
-                "transactions?fromBookingDateTime=2019-08-01T00:00:00.000Z&toBookingDateTime=2019-09-15T00:00:00.000Z", "GET", null, null);
+                "transactions?fromBookingDateTime=2019-01-01T00:00:00.000Z&toBookingDateTime=2019-04-01T00:00:00.000Z", "GET", null, null);
             out.println(result.toString());
 
             // Get accountId + transactions
